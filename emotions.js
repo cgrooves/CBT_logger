@@ -9,9 +9,9 @@ function addEmotion() {
     emotion.addEventListener("dblclick", removeEmotion);
     
     // append
-    emotionsList.insertBefore(emotion, addItem);
+    emotionsList.insertBefore(emotion, addItem.nextSibling)
 }
 
 function removeEmotion() {
-    document.getElementById("emotions_list").removeChild(this);
+    this.parentNode.removeChild(this);
 }
