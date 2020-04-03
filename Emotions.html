@@ -2,6 +2,8 @@
 <html>
     <head>
         <title>Emotional Response</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body>
@@ -10,9 +12,12 @@
             What are you feeling? What emotions? Go ahead and list 
             them below.
         </p>
+
+        <ul name="emotions_list">
+            <li name="add_emotions"><em>Click to add more emotions</em></li>
+        </ul>
+
         <form>
-            <textarea name="emotions" cols="50" rows="20" 
-            placeholder="Describe emotions"></textarea>
             <br>
             <input type="submit" formaction="Intro.html" value="Back">
             <input type="submit" formaction="Event.html" value="Next">
