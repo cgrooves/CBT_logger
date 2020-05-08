@@ -7,8 +7,18 @@
             <legend>Login</legend>
             {{ form.hidden_tag() }}
             <div>
+                <!-- Email field and validation -->
                 {{ form.email.label() }}
-                {{ form.email() }}
+                {% if form.email.errors %}
+                    {{ form.email(class="form_invalid")}}
+                    <div>
+                        {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.email() }}
+                {% endif %}   
             </div>
             <div>
                 {{ form.password.label() }}
