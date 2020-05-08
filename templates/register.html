@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div>
+        <form method="POST" action="">
+            <fieldset>
+            <legend>Register</legend>
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.username.label() }}
+                {{ form.username() }}
+            </div>
+            <div>
+                {{ form.email.label() }}
+                {{ form.email() }}
+            </div>
+            <div>
+                {{ form.password.label() }}
+                {{ form.password() }}
+            </div>
+            <div>
+                {{ form.confirm_password.label() }}
+                {{ form.confirm_password() }}
+            </div>
+            <div>
+                {{ form.submit() }}
+            </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock content %}
+    
