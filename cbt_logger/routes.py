@@ -1,12 +1,12 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from cbt_logger.forms import RegistrationForm, LoginForm
 from cbt_logger import app, bcrypt, db
 from cbt_logger.models import User
-
-# Routing
+from flask_login import login_user, logout_user, current_user, login_required
 
 
 @app.route("/home")
+@app.route("/", methods=['GET', 'POST'])
 def home():
     return render_template("home.html", title="Home")
 
@@ -25,17 +25,42 @@ def register():
                     password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        flash(f"New account creation successful! Welcome, {form.username.data}\
-            !", "success")
+        flash(f"New account creation successful! Welcome,\
+            {form.username.data}!", "success")
         return redirect(url_for('home'))
 
     return render_template("register.html", title="Register", form=form)
 
 
-@app.route("/", methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        return redirect(url_for('home'))
+        # Check email and password
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password,
+                                               form.password.data):
+            login_user(user, remember=False)
+
+            next_page = request.args.get('next')
+            if next_page:
+                return redirect(next_page)
+            else:
+                return redirect(url_for('home'))
+        else:
+            flash(f"Login Unsuccessful, please check username and password.",
+                  "danger")
     return render_template("login.html", title="Login", form=form)
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+
+@app.route("/account")
+@login_required
+def account():
+    return render_template('account.html', title='Account')

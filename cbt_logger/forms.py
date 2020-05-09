@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Length, Email, EqualTo
+
+from cbt_logger.models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -14,6 +16,18 @@ class RegistrationForm(FlaskForm):
                                      validators=[DataRequired(),
                                                  EqualTo('password')])
     submit = SubmitField('Create Account')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError("Username is already taken. Please choose\
+                another username.")
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError("Email is already registered. Please use\
+                another email.")
 
 
 class LoginForm(FlaskForm):
