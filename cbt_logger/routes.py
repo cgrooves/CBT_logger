@@ -1,6 +1,7 @@
 from flask import render_template, flash, redirect, url_for
 from cbt_logger.forms import RegistrationForm, LoginForm
-from cbt_logger import app
+from cbt_logger import app, bcrypt, db
+from cbt_logger.models import User
 
 # Routing
 
@@ -13,9 +14,21 @@ def home():
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+
+    # Successful info creation
     if form.validate_on_submit():
-        flash(f"Account created for {form.username.data}!", "success")
+        # Hash the password
+        hashed_password = bcrypt.generate_password_hash(form.password.data).\
+            decode('utf-8')
+        # Create a new User instance and add to database
+        user = User(username=form.username.data, email=form.email.data,
+                    password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        flash(f"New account creation successful! Welcome, {form.username.data}\
+            !", "success")
         return redirect(url_for('home'))
+
     return render_template("register.html", title="Register", form=form)
 
 
