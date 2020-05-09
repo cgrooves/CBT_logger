@@ -15,7 +15,7 @@
 
 <form>
     <br>
-    <input type="submit" formaction="Intro.html" value="Back">
-    <input type="submit" formaction="Event.html" value="Next">
+    <input type="submit" formaction="{{ url_for('home') }}" value="Back">
+    <input type="submit" formaction="{{ url_for('event')}}" value="Next">
 </form>
 {% endblock content %}

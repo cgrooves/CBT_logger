@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+<h1>Describe the Event</h1>
+<p>
+    What can you remember about what triggered you to start
+    feeling this way? What kinds of things were happening?
+    Where were you?
+</p>
+<form>
+    <textarea name="context" rows="20" cols="20"
+    placeholder="Context or inciting incident(s) leading to these emotions">
+    </textarea>
+    <br>
+    <input type="submit" formaction="{{ url_for('emotions') }}" value="Back">
+    <input type="submit" formaction="{{ url_for('thoughts') }}" value="Next">
+</form>    
+{% endblock content %}

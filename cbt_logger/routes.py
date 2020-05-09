@@ -48,7 +48,7 @@ def login():
             else:
                 return redirect(url_for('home'))
         else:
-            flash(f"Login Unsuccessful, please check username and password.",
+            flash("Login Unsuccessful, please check username and password.",
                   "danger")
     return render_template("login.html", title="Login", form=form)
 
@@ -70,3 +70,21 @@ def account():
 @login_required
 def emotions():
     return render_template('emotions.html', title='Mood Logging')
+
+
+@app.route("/event")
+@login_required
+def event():
+    return render_template('event.html', title='Event')
+
+
+@app.route("/thoughts")
+@login_required
+def thoughts():
+    return render_template('thoughts.html', title='Thoughts')
+
+
+@app.route("/summary")
+@login_required
+def summary():
+    return render_template('summary.html', title='Summary')
