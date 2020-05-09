@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+<h1>Emotional Response</h1>
+<p>
+    What are you feeling? What emotions? Go ahead and list 
+    them below.
+</p>
+
+<script src="/static/emotions.js"></script>
+<ul id="emotions_list">
+    <li id="add_emotions" onclick="addEmotion()"><em>Click to add more emotions</em></li>
+</ul>
+
+<form>
+    <br>
+    <input type="submit" formaction="Intro.html" value="Back">
+    <input type="submit" formaction="Event.html" value="Next">
+</form>
+{% endblock content %}

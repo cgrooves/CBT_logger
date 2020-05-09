@@ -64,3 +64,9 @@ def logout():
 @login_required
 def account():
     return render_template('account.html', title='Account')
+
+
+@app.route("/emotions")
+@login_required
+def emotions():
+    return render_template('emotions.html', title='Mood Logging')
