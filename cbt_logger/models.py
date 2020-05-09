@@ -1,18 +1,5 @@
-from flask import Flask, render_template, flash, url_for, redirect
-from flask_sqlalchemy import SQLAlchemy
-from forms import RegistrationForm, LoginForm
+from cbt_logger import db
 from datetime import datetime
-
-app = Flask(__name__)
-
-# Configurations
-app.config['SECRET_KEY'] = 'e57e70c34719a8f6d181fc5384d8cca6'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-
-# Create database instance
-db = SQLAlchemy(app)
-
-# Data Models
 
 
 class User(db.Model):
@@ -58,33 +45,4 @@ class CBTLog(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"CBTLog('{self.user_id}', '{self.datetime}', '{self.brief}')"
-
-# Routing
-
-
-@app.route("/home")
-def home():
-    return render_template("home.html", title="Home")
-
-
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        flash(f"Account created for {form.username.data}!", "success")
-        return redirect(url_for('home'))
-    return render_template("register.html", title="Register", form=form)
-
-
-@app.route("/", methods=['GET', 'POST'])
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        return redirect(url_for('home'))
-    return render_template("login.html", title="Login", form=form)
-
-
-if __name__ == "__main__":
-    app.run(port=8992, debug=True)
+        return f"CBTLog('{self.datetime}', '{self.user_id}', '{self.brief}')"
