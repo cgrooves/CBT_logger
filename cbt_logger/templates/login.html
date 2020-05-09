@@ -1,3 +1,5 @@
+{% from 'macros.html' import form_field_verify with context %}
+
 {% extends 'layout.html' %}
 
 {% block content %}
@@ -6,24 +8,8 @@
             <fieldset>
             <legend>Login</legend>
             {{ form.hidden_tag() }}
-            <div>
-                <!-- Email field and validation -->
-                {{ form.email.label() }}
-                {% if form.email.errors %}
-                    {{ form.email(class="form_invalid")}}
-                    <div>
-                        {% for error in form.email.errors %}
-                        <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.email() }}
-                {% endif %}   
-            </div>
-            <div>
-                {{ form.password.label() }}
-                {{ form.password() }}
-            </div>
+            {{ form_field_verify(form.email) }}
+            {{ form_field_verify(form.password) }}
             <div>
                 {{ form.submit() }}
             </div>
