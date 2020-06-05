@@ -70,4 +70,12 @@ def account():
 @login_required
 def log():
     eventForm = EventForm()
+    if eventForm.validate_on_submit():
+        return redirect(url_for('emotions'))
     return render_template('event.html', title='Event', form=eventForm)
+
+
+@app.route('/emotions', methods=['GET', 'POST'])
+@login_required
+def emotions():
+    return render_template('emotions.html', title='Emotions')

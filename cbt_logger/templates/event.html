@@ -12,12 +12,16 @@
 <!-- EventForm -->
 <div>
 <fieldset>
-    <legend>Event Context</legend>
-    {{ form.hidden_tag() }}
-    {{ form_field_verify(form.datetime) }}
-    {{ form_field_verify(form.brief) }}
-    {{ form_field_verify(form.detailed) }}
-    {{ form.submit() }}
+    <form method="POST" action="">
+        <legend>Event Context</legend>
+        {{ form.hidden_tag() }}
+        {{ form_field_verify(form.dateTime) }}
+        {{ form_field_verify(form.brief) }}
+        {{ form_field_verify(form.detailed) }}
+        <div>
+            {{ form.nextStep() }}
+        </div>
+    </form>
 </fieldset>
 </div>
 {% endblock content %}
