@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, ValidationError
 from wtforms import TextAreaField, DateTimeField, TextField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
-
+from datetime import datetime
 from cbt_logger.models import User
 
 
@@ -40,9 +40,10 @@ class LoginForm(FlaskForm):
 
 
 class EventForm(FlaskForm):
-    datetime = DateTimeField(label='Date/Time of Incident',
-                             validators=[DataRequired()])
+    dateTime = DateTimeField(label='Date/Time of Incident',
+                             validators=[DataRequired()],
+                             default=datetime.now())
     brief = TextField(label='Brief Description', validators=[DataRequired()])
     detailed = TextAreaField(label='Detailed description of context',
                              validators=[DataRequired()])
-    submit = SubmitField(label='Next')
+    nextStep = SubmitField('Next')
