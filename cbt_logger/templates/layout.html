@@ -20,9 +20,8 @@
         <nav>
             <div>
                 {% if current_user.is_authenticated %}
-                    {% if 'account' in request.path %}
                     <a href="{{ url_for('home') }}">Home</a>
-                    {% else %}
+                    {% if 'account' not in request.path %}
                     <a href="{{ url_for('account') }}">Account</a>
                     {% endif %}
                     <a href="{{ url_for('logout') }}">Logout</a>
