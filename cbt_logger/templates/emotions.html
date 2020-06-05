@@ -8,14 +8,14 @@
     them below.
 </p>
 
-<script src="/static/emotions.js"></script>
+<script src="{{ url_for('static', filename='emotions.js') }}"></script>
 <ul id="emotions_list">
     <li id="add_emotions" onclick="addEmotion()"><em>Click to add more emotions</em></li>
 </ul>
 
-<form>
+<form method="POST">
     <br>
-    <input type="submit" formaction="{{ url_for('home') }}" value="Back">
-    <input type="submit" formaction="{{ url_for('event')}}" value="Next">
+    <input type="submit" formaction="{{ url_for('log') }}" value="Back">
+    <input type="submit" formaction="{{ url_for('home') }}" value="Next">
 </form>
 {% endblock content %}
