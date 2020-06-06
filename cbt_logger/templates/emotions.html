@@ -3,6 +3,7 @@
 
 {% block content %}
 <h1>Emotional Response</h1>
+<h2>{{ logBrief }}</h2>
 <p>
     What are you feeling? What emotions? Go ahead and list 
     them below.
@@ -15,7 +16,7 @@
 
 <form method="POST">
     <br>
-    <input type="submit" formaction="{{ url_for('log') }}" value="Back">
-    <input type="submit" formaction="{{ url_for('home') }}" value="Next">
+    <input type="submit" formaction="" value="Back">
+    <input type="submit" formaction="" value="Next">
 </form>
 {% endblock content %}
