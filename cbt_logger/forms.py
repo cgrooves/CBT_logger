@@ -40,9 +40,6 @@ class LoginForm(FlaskForm):
 
 
 class EventForm(FlaskForm):
-    dateTime = DateTimeField(label='Date/Time of Incident',
-                             validators=[DataRequired()],
-                             default=datetime.now())
     brief = TextField(label='Brief Description', validators=[DataRequired()])
     detailed = TextAreaField(label='Detailed description of context',
                              validators=[DataRequired()])

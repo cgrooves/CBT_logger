@@ -46,10 +46,9 @@ class Distortion(db.Model):
 class CBTLog(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     brief = db.Column(db.String(80), nullable=False)
     context = db.Column(db.Text, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"CBTLog('{self.datetime}', '{self.user_id}', '{self.brief}')"
+        return f"CBTLog('{self.user_id}', '{self.brief}')"

@@ -3,7 +3,6 @@ from cbt_logger.forms import RegistrationForm, LoginForm, EventForm
 from cbt_logger import app, bcrypt, db
 from cbt_logger.models import User, CBTLog
 from flask_login import login_user, logout_user, current_user, login_required
-import datetime
 
 
 @app.route("/home")
@@ -67,20 +66,34 @@ def account():
     return render_template('account.html', title='Account')
 
 
-@app.route('/log/event', methods=['GET', 'POST'])
-@app.route('/log', methods=['GET', 'POST'])
+@app.route('/log', methods=['GET','POST'])
+@app.route('/log/<int:logId>', methods=['GET', 'POST'])
 @login_required
-def log():
+def log(logId=None):
     eventForm = EventForm()
 
-    if eventForm.validate_on_submit():
+    if logId:
+        old_log = CBTLog.query.get_or_404(logId)
+        # Populate the form
+        eventForm.detailed.data = old_log.context
+        eventForm.brief.data = old_log.brief
+    else:
+        old_log = None
 
-        # Get the event data and make a db entry
-        new_log = CBTLog(datetime=datetime.datetime.now(),
-                         brief=eventForm.brief.data,
-                         context=eventForm.detailed.data,
-                         user_id=current_user.get_id())
-        db.session.add(new_log)
+    if eventForm.validate_on_submit():
+        if old_log:
+            # Update the log
+            old_log.brief = eventForm.brief.data
+            old_log.context = eventForm.detailed.data
+            new_log = old_log
+        else:
+            # Get the event data and make a db entry
+            new_log = CBTLog(brief=eventForm.brief.data,
+                             context=eventForm.detailed.data,
+                             user_id=current_user.get_id())
+            db.session.add(new_log)
+
+        # Save changes to the database
         db.session.commit()
 
         # Go to the next page
