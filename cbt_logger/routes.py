@@ -66,14 +66,18 @@ def account():
     return render_template('account.html', title='Account')
 
 
-@app.route('/log', methods=['GET','POST'])
+@app.route('/log', methods=['GET', 'POST'])
 @app.route('/log/<int:logId>', methods=['GET', 'POST'])
 @login_required
 def log(logId=None):
     eventForm = EventForm()
 
     if logId:
-        old_log = CBTLog.query.get_or_404(logId)
+        old_log = CBTLog.query.filter_by(user_id=current_user.id,
+                                         id=logId).first()
+        if old_log is None:
+            flash(f'Log {logId} not found for user {current_user.username}')
+            return redirect(url_for('log'))
         # Populate the form
         eventForm.detailed.data = old_log.context
         eventForm.brief.data = old_log.brief
