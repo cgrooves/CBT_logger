@@ -14,12 +14,13 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(length=20), unique=True, nullable=False)
     email = db.Column(db.String(length=20), unique=True, nullable=False)
     password = db.Column(db.String(length=60), nullable=False)
-    image_file = db.Column(db.String(20), nullable=False,
-                           default='default.jpg')
     cbt_logs = db.relationship('CBTLog', backref='user', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+    def get_id(self):
+        return self.id
 
 
 class Mood(db.Model):
