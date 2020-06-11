@@ -8,7 +8,12 @@ from flask_login import login_user, logout_user, current_user, login_required
 @app.route("/home")
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template("home.html", title="Home")
+    if current_user.is_authenticated:
+        logs = CBTLog.query.filter_by(user_id=current_user.id).all()
+    else:
+        logs = []
+
+    return render_template("home.html", title="Home", logs=logs)
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -108,7 +113,7 @@ def log(logId=None):
 @app.route('/emotions/<int:logId>', methods=['GET', 'POST'])
 @login_required
 def emotions(logId):
-    current_log = CBTLog.query.filter_by(id=logId).first()
+    theLog = CBTLog.query.get(logId)
 
     return render_template('emotions.html', title='Emotions',
-                           logBrief=current_log.brief)
+                           log=theLog)

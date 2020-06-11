@@ -6,6 +6,23 @@
 <p>
     Here I will have some explanation, hopefully, of what this is,
     and some encouragement. When you are ready, 
-    <a href="{{ url_for('log') }}">click here to begin.</a>
-</p>    
+    <a href="{{ url_for('log') }}">click here to begin!</a>
+</p>
+<h2>CBT Logs</h2>
+    {% if logs|length == 0 %}
+    <p>
+        You haven't made any CBT logs! 
+        <a href="{{ url_for('log') }}">Click here to begin!</a>
+    </p>
+    {% else %}
+        
+        {% for log in logs %}
+        <h3>{{ log.brief }}</h3>
+        <p>
+            {{ log.context }}
+        </p>
+            
+        {% endfor %}
+            
+    {% endif %}
 {% endblock content %}

@@ -3,7 +3,7 @@
 
 {% block content %}
 <h1>Emotional Response</h1>
-<h2>{{ logBrief }}</h2>
+<h2>{{ log.brief }}</h2>
 <p>
     What are you feeling? What emotions? Go ahead and list 
     them below.
@@ -14,9 +14,9 @@
     <li id="add_emotions" onclick="addEmotion()"><em>Click to add more emotions</em></li>
 </ul>
 
-<form method="POST">
+<form method="GET">
     <br>
-    <input type="submit" formaction="" value="Back">
+    <input type="submit" formaction="/log/{{ log.id }}" value="Back">
     <input type="submit" formaction="" value="Next">
 </form>
 {% endblock content %}
