@@ -8,6 +8,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 @app.route("/home")
 @app.route("/", methods=['GET', 'POST'])
 def home():
+    # Get a list of current logs (if logged in)
     if current_user.is_authenticated:
         logs = CBTLog.query.filter_by(user_id=current_user.id).all()
     else:
@@ -72,23 +73,22 @@ def account():
 
 
 @app.route('/log', methods=['GET', 'POST'])
-@app.route('/log/<int:logId>', methods=['GET', 'POST'])
+@app.route('/log/<int:id>', methods=['GET', 'POST'])
 @login_required
-def log(logId=None):
+def log(id=None):
     eventForm = EventForm()
 
-    if logId:
+    # Validate that the current user can access this log
+    if id:
         old_log = CBTLog.query.filter_by(user_id=current_user.id,
-                                         id=logId).first()
+                                         id=id).first()
         if old_log is None:
-            flash(f'Log {logId} not found for user {current_user.username}')
+            flash(f'Log {id} not found for user {current_user.username}')
             return redirect(url_for('log'))
-        # Populate the form
-        eventForm.detailed.data = old_log.context
-        eventForm.brief.data = old_log.brief
     else:
         old_log = None
 
+    # Handle form submission
     if eventForm.validate_on_submit():
         if old_log:
             # Update the log
@@ -106,14 +106,20 @@ def log(logId=None):
         db.session.commit()
 
         # Go to the next page
-        return redirect(url_for('emotions', logId=new_log.id))
+        return redirect(url_for('emotions', id=new_log.id))
+    elif id:  # Handle update
+        # Populate the form
+        eventForm.detailed.data = old_log.context
+        eventForm.brief.data = old_log.brief
+
     return render_template('event.html', title='Event', form=eventForm)
 
 
-@app.route('/emotions/<int:logId>', methods=['GET', 'POST'])
+@app.route('/emotions/<int:id>', methods=['GET', 'POST'])
 @login_required
-def emotions(logId):
-    theLog = CBTLog.query.get(logId)
+def emotions(id):
+    # TODO validate user access to log
+    theLog = CBTLog.query.get(id)
 
     return render_template('emotions.html', title='Emotions',
                            log=theLog)
