@@ -9,7 +9,7 @@ function addEmotion() {
         alert("You must enter text for the emotion!");
         return;
     }
-    document.getElementById("emotionsInput").nodeValue = "";
+    document.getElementById("emotionsInput").value = "";
     
     // Create the new emotion item
     let newEmotion = document.createElement("li");

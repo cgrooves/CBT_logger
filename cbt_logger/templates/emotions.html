@@ -11,8 +11,12 @@
 
 <script src="{{ url_for('static', filename='emotions.js') }}"></script>
 <div>
-    <input type="text" id="emotionsInput" placeholder="Type emotion here...">
-    <span onclick="addEmotion()" class="addButton">Add</span>
+    <input type="text"
+    id="emotionsInput"
+    onkeyup="if (event.keyCode == 13)
+                document.getElementById('emotionButton').click()"
+    placeholder="Type emotion here...">
+    <span onclick="addEmotion()" id="emotionButton" class="addButton">Add</span>
 </div>
 
 <ul id="emotionsList">
