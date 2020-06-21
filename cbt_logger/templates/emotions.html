@@ -10,8 +10,12 @@
 </p>
 
 <script src="{{ url_for('static', filename='emotions.js') }}"></script>
-<ul id="emotions_list">
-    <li id="add_emotions" onclick="addEmotion()"><em>Click to add more emotions</em></li>
+<div>
+    <input type="text" id="emotionsInput" placeholder="Type emotion here...">
+    <span onclick="addEmotion()" class="addButton">Add</span>
+</div>
+
+<ul id="emotionsList">
 </ul>
 
 <form method="GET">

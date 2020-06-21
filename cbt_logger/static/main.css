@@ -2,3 +2,13 @@
     text-align: left;
     color: red;
 }
+
+.addButton:hover {
+    background-color: green;
+    color: white;
+}
+
+.listClose:hover {
+    background-color: darkred;
+    color: white;
+}
