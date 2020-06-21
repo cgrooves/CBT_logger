@@ -2,7 +2,8 @@
 function addEmotion() {
     
     // Get the input value
-    let emotionText = document.getElementById("emotionsInput").nodeValue;
+    let emotionText = document.getElementById("emotionsInput").value;
+    console.log("adding emotion text " + emotionText);
     if (emotionText == "")
     {
         alert("You must enter text for the emotion!");
