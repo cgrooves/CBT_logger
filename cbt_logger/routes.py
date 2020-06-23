@@ -72,6 +72,14 @@ def account():
     return render_template('account.html', title='Account')
 
 
+def validateUserAccess(Model, id):
+    item = Model.query.filter_by(user_id=current_user.id, id=id).first()
+    if item is None:
+        flash(f'Invalid for user {current_user.username}')
+
+    return item
+
+
 @app.route('/log', methods=['GET', 'POST'])
 @app.route('/log/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -80,10 +88,8 @@ def log(id=None):
 
     # Validate that the current user can access this log
     if id:
-        old_log = CBTLog.query.filter_by(user_id=current_user.id,
-                                         id=id).first()
+        old_log = validateUserAccess(CBTLog, id)
         if old_log is None:
-            flash(f'Log {id} not found for user {current_user.username}')
             return redirect(url_for('log'))
     else:
         old_log = None
@@ -118,8 +124,10 @@ def log(id=None):
 @app.route('/emotions/<int:id>', methods=['GET', 'POST'])
 @login_required
 def emotions(id):
-    # TODO validate user access to log
-    theLog = CBTLog.query.get(id)
+
+    theLog = validateUserAccess(CBTLog, id)
+    if theLog is None:
+        return redirect(url_for('log'))
 
     return render_template('emotions.html', title='Emotions',
                            log=theLog)
