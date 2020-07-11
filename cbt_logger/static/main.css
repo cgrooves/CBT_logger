@@ -1,0 +1,35 @@
+.form_invalid {
+    text-align: left;
+    color: red;
+}
+
+.addButton:hover {
+    background-color: green;
+    color: white;
+}
+
+.listClose {
+    position: absolute;
+    right: 10%;
+    top: 0;
+}
+
+.listClose:hover {
+    background-color: darkred;
+    color: white;
+}
+
+.emotionSlider {
+    position: absolute;
+    right: 30%;
+}
+
+.emotionItem {
+    position: relative;
+}
+
+.outputArea {
+    border: 1px solid black;
+    width: 45%;
+    margin: 6px;
+}

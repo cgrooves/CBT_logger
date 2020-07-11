@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+
+{% block head %}
+<script src="{{ url_for('static', filename='emotions.js') }}"></script>
+{% endblock head %}
+    
+
+{% block content %}
+<h1>Emotional Response</h1>
+<h2>{{ log.brief }}</h2>
+<p>
+    What are you feeling? What emotions? Go ahead and list 
+    them below.
+</p>
+
+<div>
+    <input type="text"
+    id="emotionsInput"
+    placeholder="Type emotion here...">
+    <span id="emotionButton" class="addButton">Add</span>
+</div>
+
+<div class="outputArea">
+    <ul id="emotionsList">
+    </ul>
+</div>
+
+<div>
+    <form method="GET">
+        <br>
+        <input type="submit" formaction="/log/{{ log.id }}" value="Back">
+        <input type="submit" formaction="" value="Next">
+    </form>
+</div>
+{% endblock content %}

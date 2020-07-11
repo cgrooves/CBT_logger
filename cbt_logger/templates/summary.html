@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Summary</h1>
+<p>Here, below, we will have a summary of your assessment.</p>
+
+<form>
+    <input type="submit" formaction="{{ url_for('home') }}" value="Home">
+    <input type="submit" formaction="{{ url_for('emotions') }}" value="Another Log">
+</form>
+
+{% endblock content %}

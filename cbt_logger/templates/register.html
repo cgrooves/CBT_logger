@@ -1,0 +1,32 @@
+{% from 'macros.html' import form_field_verify with context %}
+
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div>
+        <form method="POST" action="">
+            <fieldset>
+            <legend>Register</legend>
+            {{ form.hidden_tag() }}
+            <!-- Username Field and Validation -->
+            {{ form_field_verify(form.username) }}
+            <!-- Email field and validation -->
+            {{ form_field_verify(form.email) }}
+            <!-- password and password_confirmation -->
+            {{ form_field_verify(form.password) }}
+            {{ form_field_verify(form.confirm_password) }}
+            <div>
+                {{ form.submit() }}
+            </div>
+            </fieldset>
+        </form>
+    </div>
+
+
+    <div>
+        <small>
+            Already have an account? <a href="{{ url_for('login') }}">Login Here!</a>
+        </small>
+    </div>
+{% endblock content %}
+    

@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+    <h1>{{ current_user.username }}</h1>
+    <p>
+        {{ current_user.username }}, registered with email {{ current_user.email }}.
+        For informational purposes, your user id is {{ current_user.id }}.
+    </p>
+{% endblock content %}

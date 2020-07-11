@@ -1,0 +1,26 @@
+{% from 'macros.html' import form_field_verify with context %}
+
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Describe the Event</h1>
+<p>
+    What can you remember about what triggered you to start
+    feeling this way? What kinds of things were happening?
+    Where were you?
+</p>
+<!-- EventForm -->
+<div>
+<fieldset>
+    <form method="POST" action="">
+        <legend>Event Context</legend>
+        {{ form.hidden_tag() }}
+        {{ form_field_verify(form.brief) }}
+        {{ form_field_verify(form.detailed) }}
+        <div>
+            {{ form.nextStep() }}
+        </div>
+    </form>
+</fieldset>
+</div>
+{% endblock content %}
