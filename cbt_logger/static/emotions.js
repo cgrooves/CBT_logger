@@ -8,7 +8,42 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     // onclick for button
     document.querySelector('#emotionButton').onclick = addEmotion;
+    document.querySelector('#pushEmotionsBtn').onclick = pushEmotions;
 });
+
+function pushEmotions() {
+    let xhttp = new XMLHttpRequest();
+
+    // Open up POST request
+    xhttp.open('POST', '/emotions/push', true);
+
+    // Gather up the emotions
+    let emotions = document.getElementsByClassName("emotionItem");
+    if (emotions.length == 0)
+    {
+        alert("No emotions specified! Please list at least one emotion.");
+        return;
+    }
+
+    // Create JSON object for HTML elements
+    let out = [];
+    for (let i = 0; i < emotions.length; i++)
+    {
+        let emotionJSON = {
+                "id": emotions[i].dataset.id,
+                // "range": emotions[i].querySelector("#emotionSlider").value,
+                "name": emotions[i].
+        };
+
+        // Add emotion JSON to list
+        console.log("ID: " + emotionJSON.id + ", EMOTION: " + emotionJSON.name);
+        out.push(emotionJSON);
+    }
+
+    // Send the JSON
+    xhttp.send(JSON.stringify(out));
+
+}
 
 function addEmotion() {
     
@@ -24,6 +59,7 @@ function addEmotion() {
     // Create the new emotion item
     let newEmotion = document.createElement("li");
     newEmotion.className = "emotionItem";
+    newEmotion.dataset.id = -1;
     newEmotion.appendChild(document.createTextNode(emotionText));
 
     // Append the emotion to the list

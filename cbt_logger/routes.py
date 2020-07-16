@@ -10,7 +10,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 def home():
     # Get a list of current logs (if logged in)
     if current_user.is_authenticated:
-        logs = CBTLog.query.filter_by(user_id=current_user.id).all()
+        logs = current_user.cbt_logs
     else:
         logs = []
 
@@ -131,3 +131,15 @@ def emotions(id):
 
     return render_template('emotions.html', title='Emotions',
                            log=theLog)
+
+
+@app.route('/emotions/push', methods=['POST'])
+def pushEmotions():
+    emotions = request.json
+    print(emotions)
+    return "Hello world"
+
+
+@app.route('/emotions/pull', methods=['POST'])
+def pullEmotions():
+    pass
