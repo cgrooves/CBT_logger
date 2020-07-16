@@ -1,5 +1,4 @@
 from cbt_logger import db, login_manager
-from datetime import datetime
 from flask_login import UserMixin
 
 
@@ -23,14 +22,14 @@ class User(db.Model, UserMixin):
         return self.id
 
 
-class Mood(db.Model):
+class Emotion(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), unique=True, nullable=False)
-    description = db.Column(db.String(60), nullable=True)
+    name = db.Column(db.String(20), nullable=False)
+    log_id = db.Column(db.Integer, db.ForeignKey('cbtlog.id'), nullable=False)
 
     def __repr__(self):
-        return f"Mood('{self.name}')"
+        return f"Emotion('{self.name}')"
 
 
 class Distortion(db.Model):
@@ -44,11 +43,12 @@ class Distortion(db.Model):
 
 
 class CBTLog(db.Model):
-
+    __tablename__ = "cbtlog"
     id = db.Column(db.Integer, primary_key=True)
     brief = db.Column(db.String(80), nullable=False)
     context = db.Column(db.Text, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    emotions = db.relationship('Emotion', backref='log', lazy=True)
 
     def __repr__(self):
         return f"CBTLog('{self.user_id}', '{self.brief}')"
