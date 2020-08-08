@@ -2,13 +2,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-
+from .config import Config
 
 app = Flask(__name__)
-
-# Configurations
-app.config['SECRET_KEY'] = 'e57e70c34719a8f6d181fc5384d8cca6'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config.from_object(Config)
 
 # Create database instance
 db = SQLAlchemy(app)
