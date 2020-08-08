@@ -25,14 +25,16 @@ function pushEmotions() {
     let out = [];
     for (let i = 0; i < emotions.length; i++)
     {
+        slider = emotions[i].getElementsByClassName("emotionSlider")[0]
         let emotionJSON = {
             "id": emotions[i].dataset.id,
-            // "range": emotions[i].querySelector("#emotionSlider").value,
+            "range": slider.value,
             "name": emotions[i].dataset.name
         };
         
         // Add emotion JSON to list
-        console.log("ID: " + emotionJSON.id + ", EMOTION: " + emotionJSON.name);
+        console.log("ID: " + emotionJSON.id + ", EMOTION: " + emotionJSON.name
+        + ", RANGE: " + emotionJSON.range);
         out.push(emotionJSON);
     }
 
